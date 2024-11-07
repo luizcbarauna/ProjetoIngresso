@@ -10,8 +10,6 @@ import org.hibernate.validator.constraints.br.CPF;
 import java.util.Date;
 
 public class UsuarioRequest {
-
-    private Long id;
     private String cpf;
     private String email;
     private String nomeCompleto;

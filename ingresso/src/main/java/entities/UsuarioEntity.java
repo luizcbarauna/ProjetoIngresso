@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
 @Entity
+@Table(name = "usuario")
 public class UsuarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
