@@ -1,16 +1,15 @@
-package resources;
+package com.ingresso.ingresso.resources;
 
-import entities.UsuarioEntity;
+import com.ingresso.ingresso.entities.UsuarioEntity;
+import com.ingresso.ingresso.entities.UsuarioRequest;
+import com.ingresso.ingresso.entities.UsuarioResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import services.UsuarioService;
+import org.springframework.web.bind.annotation.*;
+import com.ingresso.ingresso.services.UsuarioService;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @RestController
@@ -25,9 +24,9 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioEntity> criarCadrastro(UsuarioEntity usuario){
+    public ResponseEntity<UsuarioResponse> criarCadrastro(@Valid @RequestBody UsuarioRequest usuario){
     try{
-        UsuarioEntity criarCadastro = service.criarUsuario(usuario);
+        UsuarioResponse criarCadastro = service.criarUsuario(usuario);
         return new ResponseEntity<>(criarCadastro, HttpStatus.CREATED);
     }catch (RuntimeException e){
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
