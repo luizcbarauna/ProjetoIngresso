@@ -1,6 +1,8 @@
 package com.ingresso.ingresso.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ingresso.ingresso.annotations.AniversarioValido;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +33,7 @@ public class UsuarioRequest {
     private String nomeCompleto;
     private String senha;
     private String apelido;
+    @AniversarioValido
     @JsonProperty(value = "data_nascimento")
     private String dataNascimento;
     private Long celular;

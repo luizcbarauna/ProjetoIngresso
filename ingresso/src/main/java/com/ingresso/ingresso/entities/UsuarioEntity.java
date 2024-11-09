@@ -2,6 +2,7 @@ package com.ingresso.ingresso.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.ingresso.ingresso.annotations.AniversarioValido;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
