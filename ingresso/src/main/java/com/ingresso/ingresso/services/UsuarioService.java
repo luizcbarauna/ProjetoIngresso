@@ -3,6 +3,7 @@ package com.ingresso.ingresso.services;
 //import com.ingresso.ingresso.entities.UsuarioEntity;
 //import com.ingresso.ingresso.entities.UsuarioRequest;
 //import com.ingresso.ingresso.entities.UsuarioResponse;
+
 import com.ingresso.ingresso.entities.UsuarioEntity;
 import com.ingresso.ingresso.entities.UsuarioListResponse;
 import com.ingresso.ingresso.entities.UsuarioRequest;
@@ -21,16 +22,34 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
     public List<UsuarioListResponse> findAll() {
-         List<UsuarioEntity> usuario = repository.findAll();
-         List<UsuarioListResponse>listResponses = UsuarioMapper.mapToList(usuario);
+        List<UsuarioEntity> usuario = repository.findAll();
+        List<UsuarioListResponse> listResponses = UsuarioMapper.mapToList(usuario);
 
-         return listResponses;
+        return listResponses;
     }
 
     public UsuarioResponse criarUsuario(UsuarioRequest usuario) {
         UsuarioEntity usuarioEntity = UsuarioMapper.mapToEntity(usuario);
         UsuarioResponse usuarioResponse = UsuarioMapper.mapToResponse(usuarioEntity);
-         repository.save(usuarioEntity);
-         return usuarioResponse;
+        repository.save(usuarioEntity);
+        return usuarioResponse;
+    }
+
+    public UsuarioResponse findById(String id)throws Exception {
+
+        UsuarioEntity usuario = repository.findById(id).orElse(null);
+        if (usuario == null) {
+            throw new Exception();
+        }
+        UsuarioResponse usuarioResponse = UsuarioMapper.mapToResponse(usuario);
+        return usuarioResponse;
+    }
+
+    public void deleteUsuario(String id) throws Exception {
+        UsuarioEntity usuario = repository.findById(id).orElse(null);
+        if (usuario == null) {
+            throw new Exception();
+        }
+        repository.delete(usuario);
     }
 }

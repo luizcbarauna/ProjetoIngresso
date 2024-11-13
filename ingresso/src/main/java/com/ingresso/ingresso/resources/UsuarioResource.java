@@ -18,19 +18,32 @@ import java.util.List;
 public class UsuarioResource {
     @Autowired
     private UsuarioService service;
+
     @GetMapping
-    public ResponseEntity<List<UsuarioListResponse>> findAll(){
-        List<UsuarioListResponse>list = service.findAll();
+    public ResponseEntity<List<UsuarioListResponse>> findAll() {
+        List<UsuarioListResponse> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
-    @PostMapping
-    public ResponseEntity<UsuarioResponse> criarCadrastro(@Valid @RequestBody UsuarioRequest usuario){
-    try{
-        UsuarioResponse criarCadastro = service.criarUsuario(usuario);
-        return new ResponseEntity<>(criarCadastro, HttpStatus.CREATED);
-    }catch (RuntimeException e){
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UsuarioResponse> findById(@PathVariable String id) throws Exception {
+        UsuarioResponse usuarioResponse = service.findById(id);
+        return ResponseEntity.ok().body(usuarioResponse);
     }
+
+    @PostMapping
+    public ResponseEntity<UsuarioResponse> criarCadrastro(@Valid @RequestBody UsuarioRequest usuario) {
+        try {
+            UsuarioResponse criarCadastro = service.criarUsuario(usuario);
+            return new ResponseEntity<>(criarCadastro, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void>deleteUsuario(@PathVariable String id) throws Exception {
+       service.deleteUsuario(id);
+       return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
