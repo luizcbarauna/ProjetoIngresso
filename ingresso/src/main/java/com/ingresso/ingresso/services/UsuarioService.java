@@ -4,6 +4,7 @@ package com.ingresso.ingresso.services;
 //import com.ingresso.ingresso.entities.UsuarioRequest;
 //import com.ingresso.ingresso.entities.UsuarioResponse;
 import com.ingresso.ingresso.entities.UsuarioEntity;
+import com.ingresso.ingresso.entities.UsuarioListResponse;
 import com.ingresso.ingresso.entities.UsuarioRequest;
 import com.ingresso.ingresso.entities.UsuarioResponse;
 import com.ingresso.ingresso.mapper.UsuarioMapper;
@@ -19,13 +20,15 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repository;
 
-    public List<UsuarioEntity> findAll() {
-        return repository.findAll();
+    public List<UsuarioListResponse> findAll() {
+         List<UsuarioEntity> usuario = repository.findAll();
+         List<UsuarioListResponse>listResponses = UsuarioMapper.mapToList(usuario);
+
+         return listResponses;
     }
 
     public UsuarioResponse criarUsuario(UsuarioRequest usuario) {
         UsuarioEntity usuarioEntity = UsuarioMapper.mapToEntity(usuario);
-
         UsuarioResponse usuarioResponse = UsuarioMapper.mapToResponse(usuarioEntity);
          repository.save(usuarioEntity);
          return usuarioResponse;

@@ -26,10 +26,12 @@ public class UsuarioEntity {
     @NotNull
     @NotBlank
     @CPF
+    @Column(unique = true)
     private String cpf;
     @NotNull
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
     @NotNull
     @NotBlank

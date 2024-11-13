@@ -1,6 +1,7 @@
 package com.ingresso.ingresso.resources;
 
 import com.ingresso.ingresso.entities.UsuarioEntity;
+import com.ingresso.ingresso.entities.UsuarioListResponse;
 import com.ingresso.ingresso.entities.UsuarioRequest;
 import com.ingresso.ingresso.entities.UsuarioResponse;
 import jakarta.validation.Valid;
@@ -18,8 +19,8 @@ public class UsuarioResource {
     @Autowired
     private UsuarioService service;
     @GetMapping
-    public ResponseEntity<List<UsuarioEntity>> findAll(){
-        List<UsuarioEntity>list = service.findAll();
+    public ResponseEntity<List<UsuarioListResponse>> findAll(){
+        List<UsuarioListResponse>list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 

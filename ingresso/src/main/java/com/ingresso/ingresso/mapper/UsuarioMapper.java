@@ -1,6 +1,7 @@
 package com.ingresso.ingresso.mapper;
 
 import com.ingresso.ingresso.entities.UsuarioEntity;
+import com.ingresso.ingresso.entities.UsuarioListResponse;
 import com.ingresso.ingresso.entities.UsuarioRequest;
 import com.ingresso.ingresso.entities.UsuarioResponse;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class UsuarioMapper {
@@ -51,4 +54,18 @@ public class UsuarioMapper {
         return usuarioResponse;
     }
 
+    public static List<UsuarioListResponse> mapToList(List<UsuarioEntity> usuario) {
+        List <UsuarioListResponse> usuarioListResponse = new ArrayList<>();
+        for( UsuarioEntity usuarioEntity : usuario ) {
+            UsuarioListResponse response = new UsuarioListResponse();
+
+        response.setId(usuarioEntity.getId());
+        response.setCpf(usuarioEntity.getCpf());
+        response.setEmail(usuarioEntity.getEmail());
+        response.setNomeCompleto(usuarioEntity.getNomeCompleto());
+        usuarioListResponse.add(response);
+
+    }
+        return usuarioListResponse;
+}
 }
