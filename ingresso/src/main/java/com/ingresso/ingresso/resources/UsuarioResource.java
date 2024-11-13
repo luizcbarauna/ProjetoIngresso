@@ -1,9 +1,6 @@
 package com.ingresso.ingresso.resources;
 
-import com.ingresso.ingresso.entities.UsuarioEntity;
-import com.ingresso.ingresso.entities.UsuarioListResponse;
-import com.ingresso.ingresso.entities.UsuarioRequest;
-import com.ingresso.ingresso.entities.UsuarioResponse;
+import com.ingresso.ingresso.entities.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,5 +42,15 @@ public class UsuarioResource {
     public ResponseEntity<Void>deleteUsuario(@PathVariable String id) throws Exception {
        service.deleteUsuario(id);
        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<UsuarioUptadeResponse>updateUsuario(@RequestBody UsuarioUpdateRequest usuario, @PathVariable String id)
+    {
+        try {
+            UsuarioUptadeResponse uptadeUsuario = service.uptadeUsuario(usuario, id);
+            return new ResponseEntity<>(uptadeUsuario, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 }

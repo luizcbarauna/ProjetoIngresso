@@ -1,9 +1,6 @@
 package com.ingresso.ingresso.mapper;
 
-import com.ingresso.ingresso.entities.UsuarioEntity;
-import com.ingresso.ingresso.entities.UsuarioListResponse;
-import com.ingresso.ingresso.entities.UsuarioRequest;
-import com.ingresso.ingresso.entities.UsuarioResponse;
+import com.ingresso.ingresso.entities.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -68,4 +65,24 @@ public class UsuarioMapper {
     }
         return usuarioListResponse;
 }
+    public static UsuarioUptadeResponse mapToResponseUpdate(UsuarioEntity usuarioEntity){
+        if (usuarioEntity==null) {
+            return null;
+        }
+        UsuarioUptadeResponse usuarioResponse = new UsuarioUptadeResponse();
+        DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+        usuarioResponse.setId(usuarioEntity.getId());
+        usuarioResponse.setCpf(usuarioEntity.getCpf());
+        usuarioResponse.setEmail(usuarioEntity.getEmail());
+        usuarioResponse.setSenha(usuarioEntity.getSenha());
+        usuarioResponse.setNomeCompleto(usuarioEntity.getNomeCompleto());
+        usuarioResponse.setApelido(usuarioEntity.getApelido());
+        usuarioResponse.setDataNascimento(usuarioEntity.getDataNascimento());
+        usuarioResponse.setCelular(usuarioEntity.getCelular());
+        usuarioResponse.setGenero(GeneroMapper.getCode(usuarioEntity.getGenero()));
+        usuarioResponse.setEndereco(usuarioEntity.getEndereco());
+        usuarioResponse.setDataCadastro(ZonedDateTime.of(usuarioEntity.getDataCadastro(), ZoneId.systemDefault()).format(dfm));
+        usuarioResponse.setDataAtualizacao(ZonedDateTime.of(usuarioEntity.getDataAtualizacao(), ZoneId.systemDefault()).format(dfm));
+        return usuarioResponse;
+    }
 }
