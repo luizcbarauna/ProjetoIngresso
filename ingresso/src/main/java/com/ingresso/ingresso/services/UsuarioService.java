@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -52,7 +53,7 @@ public class UsuarioService {
         repository.delete(usuario);
     }
 
-    public UsuarioUptadeResponse uptadeUsuario(UsuarioUpdateRequest usuario, String id) throws Exception {
+    public UsuarioUpdateResponse uptadeUsuario(UsuarioUpdateRequest usuario, String id) throws Exception {
         UsuarioEntity usuarioExistente = repository.findById(id).orElse(null);
         if (usuario == null) {
             throw new Exception();
@@ -84,9 +85,42 @@ public class UsuarioService {
         if (usuario.getEndereco() != null) {
             usuarioExistente.setEndereco(usuario.getEndereco());
         }
-        usuarioExistente.setDataAtualizacao(LocalDateTime.now());
-        UsuarioUptadeResponse usuarioAtualizado = UsuarioMapper.mapToResponseUpdate(usuarioExistente);
+
+        UsuarioUpdateResponse usuarioAtualizado = UsuarioMapper.mapToResponseUpdate(usuarioExistente);
         repository.save(usuarioExistente);
         return usuarioAtualizado;
+    }
+
+    public UsuarioResponse findByIdAlterarSenha(String id) throws Exception {
+        UsuarioEntity usuario = repository.findById(id).orElse(null);
+        usuario.setCodigoDeSeguranca(UUID.randomUUID().toString());
+        repository.save(usuario);
+        if (usuario == null) {
+            throw new Exception();
+        }
+        UsuarioResponse usuarioResponse = UsuarioMapper.mapToResponse(usuario);
+        return usuarioResponse;
+    }
+
+    public void uptadeSenha(UpdateSenhaRequest novaSenha, String id) throws Exception {
+        try {
+            UUID teste = UUID.fromString(novaSenha.getCodigoDeSeguranca());
+
+
+        } catch (IllegalArgumentException e) {
+            throw new Exception();
+        }
+
+    }
+
+    public void uptadeSenhaAlteracao(UpdateSenhaRequest novaSenha, String id) throws Exception {
+        UsuarioEntity usuario = repository.findById(id).orElse(null);
+        if (usuario.getSenha().equals(novaSenha.getSenhaAtual())) {
+            usuario.setSenha(novaSenha.getNovaSenha());
+            repository.save(usuario);
+        }else{
+            throw new Exception();
+        }
+
     }
 }

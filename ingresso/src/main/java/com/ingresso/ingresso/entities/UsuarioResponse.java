@@ -22,4 +22,5 @@ public class UsuarioResponse {
     private String genero;
     private String dataCadastro;
     private Endereco endereco;
+    private String codigoDeSeguranca;
 }

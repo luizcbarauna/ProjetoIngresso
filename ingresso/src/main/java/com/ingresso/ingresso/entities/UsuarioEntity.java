@@ -23,18 +23,10 @@ import java.util.Date;
 public class UsuarioEntity {
     @Id
     private String id;
-    @NotNull
-    @NotBlank
-    @CPF
     @Column(unique = true)
     private String cpf;
-    @NotNull
-    @NotBlank
-    @Email
     @Column(unique = true)
     private String email;
-    @NotNull
-    @NotBlank
     @JsonProperty(value = "nome_completo")
     private String nomeCompleto;
     private String senha;
@@ -47,6 +39,7 @@ public class UsuarioEntity {
     private LocalDateTime dataAtualizacao;
     @JsonProperty("data_cadastro")
     private LocalDateTime dataCadastro;
+    private String codigoDeSeguranca;
     @Embedded
     private Endereco endereco;
 

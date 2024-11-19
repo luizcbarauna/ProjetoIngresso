@@ -23,4 +23,5 @@ public class UsuarioUpdateRequest {
     private Long celular;
     private String genero;
     private Endereco endereco;
+    private String codigoDeSeguranca;
 }

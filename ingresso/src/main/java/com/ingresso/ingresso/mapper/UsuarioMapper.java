@@ -1,20 +1,18 @@
 package com.ingresso.ingresso.mapper;
 
 import com.ingresso.ingresso.entities.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public class UsuarioMapper {
-    public static UsuarioEntity mapToEntity(UsuarioRequest usuarioRequest){
-        if(usuarioRequest ==null){
+    public static UsuarioEntity mapToEntity(UsuarioRequest usuarioRequest) {
+        if (usuarioRequest == null) {
             return null;
         }
         UsuarioEntity usuarioEntity = new UsuarioEntity();
@@ -32,11 +30,11 @@ public class UsuarioMapper {
         return usuarioEntity;
     }
 
-    public static UsuarioResponse mapToResponse(UsuarioEntity usuarioEntity){
-      if (usuarioEntity==null) {
-          return null;
-      }
-      UsuarioResponse usuarioResponse = new UsuarioResponse();
+    public static UsuarioResponse mapToResponse(UsuarioEntity usuarioEntity) {
+        if (usuarioEntity == null) {
+            return null;
+        }
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
         DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
         usuarioResponse.setId(usuarioEntity.getId());
         usuarioResponse.setCpf(usuarioEntity.getCpf());
@@ -48,28 +46,30 @@ public class UsuarioMapper {
         usuarioResponse.setGenero(GeneroMapper.getCode(usuarioEntity.getGenero()));
         usuarioResponse.setDataCadastro(ZonedDateTime.of(usuarioEntity.getDataCadastro(), ZoneId.systemDefault()).format(dfm));
         usuarioResponse.setEndereco(usuarioEntity.getEndereco());
+        usuarioResponse.setCodigoDeSeguranca(usuarioEntity.getCodigoDeSeguranca());
         return usuarioResponse;
     }
 
     public static List<UsuarioListResponse> mapToList(List<UsuarioEntity> usuario) {
-        List <UsuarioListResponse> usuarioListResponse = new ArrayList<>();
-        for( UsuarioEntity usuarioEntity : usuario ) {
+        List<UsuarioListResponse> usuarioListResponse = new ArrayList<>();
+        for (UsuarioEntity usuarioEntity : usuario) {
             UsuarioListResponse response = new UsuarioListResponse();
 
-        response.setId(usuarioEntity.getId());
-        response.setCpf(usuarioEntity.getCpf());
-        response.setEmail(usuarioEntity.getEmail());
-        response.setNomeCompleto(usuarioEntity.getNomeCompleto());
-        usuarioListResponse.add(response);
+            response.setId(usuarioEntity.getId());
+            response.setCpf(usuarioEntity.getCpf());
+            response.setEmail(usuarioEntity.getEmail());
+            response.setNomeCompleto(usuarioEntity.getNomeCompleto());
+            usuarioListResponse.add(response);
 
-    }
+        }
         return usuarioListResponse;
-}
-    public static UsuarioUptadeResponse mapToResponseUpdate(UsuarioEntity usuarioEntity){
-        if (usuarioEntity==null) {
+    }
+
+    public static UsuarioUpdateResponse mapToResponseUpdate(UsuarioEntity usuarioEntity) {
+        if (usuarioEntity == null) {
             return null;
         }
-        UsuarioUptadeResponse usuarioResponse = new UsuarioUptadeResponse();
+        UsuarioUpdateResponse usuarioResponse = new UsuarioUpdateResponse();
         DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
         usuarioResponse.setId(usuarioEntity.getId());
         usuarioResponse.setCpf(usuarioEntity.getCpf());
@@ -82,7 +82,7 @@ public class UsuarioMapper {
         usuarioResponse.setGenero(GeneroMapper.getCode(usuarioEntity.getGenero()));
         usuarioResponse.setEndereco(usuarioEntity.getEndereco());
         usuarioResponse.setDataCadastro(ZonedDateTime.of(usuarioEntity.getDataCadastro(), ZoneId.systemDefault()).format(dfm));
-        usuarioResponse.setDataAtualizacao(ZonedDateTime.of(usuarioEntity.getDataAtualizacao(), ZoneId.systemDefault()).format(dfm));
+        usuarioResponse.setDataAtualizacao(ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()).format(dfm));
         return usuarioResponse;
     }
 }
