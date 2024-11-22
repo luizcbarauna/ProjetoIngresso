@@ -32,15 +32,28 @@ public class UsuarioRequest {
     @NotNull
     @NotBlank
     @JsonProperty(value = "nome_completo")
-    @Size(max = 100)
+    @Size(max = 100, min = 2)
     private String nomeCompleto;
+    @NotNull
+    @NotBlank
+    @Size(max = 100)
     private String senha;
+    @Size(max = 20)
     private String apelido;
+    @NotNull
+    @NotBlank
     @AniversarioValido
     @JsonProperty(value = "data_nascimento")
     private String dataNascimento;
+    @NotNull
+    @NotBlank
+    @Size(min = 11, max = 11)
     private Long celular;
+    @NotNull
+    @NotBlank
+    @Size(max = 2)
     private String genero;
+
     private String codigoDeSeguranca;
     @Embedded
     private Endereco endereco;
